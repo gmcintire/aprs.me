@@ -9,7 +9,7 @@ import Config
 
 config :aprs,
   ecto_repos: [Aprs.Repo],
-  aprs_is_server: 'dallas.aprs2.net',
+  aprs_is_server: System.get_env("APRS_SERVER", "dallas.aprs2.net"),
   aprs_is_port: 14580,
   aprs_is_default_filter: "r/47.6/-122.3/9999999999999999",
   aprs_is_login_id: System.get_env("APRS_CALLSIGN"),
