@@ -8,7 +8,7 @@ if [ -z "$COOKIE" ]; then
 fi
 
 # Get the first IPv6 address returned
-ip_array=( $(fly ips private | awk '(NR>1){ print $3 }') )
+ip_array=( $(fly ips private | awk '(NR>1){ print $5 }') )
 IP=${ip_array[0]}
 
 # Get the Fly app name. Assumes it is used as part of the full node name
@@ -19,4 +19,5 @@ echo Attempting to connect to $FULL_NODE_NAME
 # Export the BEAM settings for running the "iex" command.
 # This creates a local node named "my_remote". The name used isn't important.
 # The cookie must match the cookie used in your project so the two nodes can connect.
-iex --erl "-proto_dist inet6_tcp" --sname my_remote --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start"
+#iex --erl "-proto_dist inet6_tcp" --sname my_remote --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\"); :observer.start"
+iex --erl "-proto_dist inet6_tcp" --sname my_remote --cookie ${COOKIE} -e "IO.inspect(Node.connect(:'${FULL_NODE_NAME}'), label: \"Node Connected?\"); IO.inspect(Node.list(), label: \"Connected Nodes\")"

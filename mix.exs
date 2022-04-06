@@ -49,6 +49,7 @@ defmodule Aprs.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:oban, "~> 2.11"},
+      {:libcluster, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
       {:credo, "~> 1.4 ", only: [:dev, :test], runtime: false}

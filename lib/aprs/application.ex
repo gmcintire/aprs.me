@@ -7,6 +7,8 @@ defmodule Aprs.Application do
 
   @impl true
   def start(_type, _args) do
+    topologies = Application.get_env(:libcluster, :topologies) || []
+
     children = [
       # Start the Ecto repository
       Aprs.Repo,
@@ -18,8 +20,9 @@ defmodule Aprs.Application do
       AprsWeb.Endpoint,
       # Start a worker by calling: Aprs.Worker.start_link(arg)
       # {Aprs.Worker, arg}
-      {Registry, keys: :duplicate, name: Registry.PubSub, partitions: System.schedulers_online()}
+      {Registry, keys: :duplicate, name: Registry.PubSub, partitions: System.schedulers_online()},
       # Aprs.Is.IsSupervisor
+      {Cluster.Supervisor, [topologies, [name: Aprs.ClusterSupervisor]]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
