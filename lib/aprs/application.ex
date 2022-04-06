@@ -15,9 +15,11 @@ defmodule Aprs.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Aprs.PubSub},
       # Start the Endpoint (http/https)
-      AprsWeb.Endpoint
+      AprsWeb.Endpoint,
       # Start a worker by calling: Aprs.Worker.start_link(arg)
       # {Aprs.Worker, arg}
+      {Registry, keys: :duplicate, name: Registry.PubSub, partitions: System.schedulers_online()},
+      Aprs.Is.IsSupervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
