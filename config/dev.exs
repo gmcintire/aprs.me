@@ -1,5 +1,12 @@
 import Config
 
+config :aprs,
+  aprs_is_server: System.get_env("APRS_SERVER", "dallas.aprs2.net"),
+  aprs_is_port: 14580,
+  aprs_is_default_filter: "r/47.6/-122.3/9999999999999999",
+  aprs_is_login_id: System.get_env("APRS_CALLSIGN"),
+  aprs_is_password: System.get_env("APRS_PASSCODE")
+
 # Configure your database
 config :aprs, Aprs.Repo,
   username: "postgres",
@@ -16,6 +23,7 @@ config :aprs, Aprs.Repo,
 # watchers to your application. For example, we use it
 # with esbuild to bundle .js and .css sources.
 config :aprs, AprsWeb.Endpoint,
+  url: [host: "localhost"],
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],

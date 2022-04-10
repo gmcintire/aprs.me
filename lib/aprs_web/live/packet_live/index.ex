@@ -9,7 +9,7 @@ defmodule AprsWeb.PacketLive.Index do
     # PubSub.subscribe(Aprsme.PubSub, "call:" <> params["callsign"])
     if connected?(socket) do
       Logger.debug("Subscribed to PubSub")
-      PubSub.subscribe(Aprs.PubSub, "aprs_messages") |> IO.inspect()
+      PubSub.subscribe(Aprs.PubSub, "aprs_messages")
     end
 
     {:ok, assign(socket, :packets, %{})}
@@ -35,7 +35,6 @@ defmodule AprsWeb.PacketLive.Index do
 
   @impl true
   def handle_info(event, socket) do
-    IO.inspect(event)
     {:noreply, socket}
   end
 

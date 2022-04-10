@@ -8,16 +8,10 @@
 import Config
 
 config :aprs,
-  ecto_repos: [Aprs.Repo],
-  aprs_is_server: System.get_env("APRS_SERVER", "dallas.aprs2.net"),
-  aprs_is_port: 14580,
-  aprs_is_default_filter: "r/47.6/-122.3/9999999999999999",
-  aprs_is_login_id: System.get_env("APRS_CALLSIGN"),
-  aprs_is_password: System.get_env("APRS_PASSCODE")
+  ecto_repos: [Aprs.Repo]
 
 # Configures the endpoint
 config :aprs, AprsWeb.Endpoint,
-  url: [host: "localhost"],
   render_errors: [view: AprsWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Aprs.PubSub,
   live_view: [signing_salt: "U65s0SFL"]

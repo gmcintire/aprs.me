@@ -40,7 +40,8 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "aprs.me"
+  # host = System.get_env("PHX_HOST") || "aprs.me"
+  host = "aprs.me"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :aprs, AprsWeb.Endpoint,
@@ -54,6 +55,14 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base
+
+  config :aprs,
+    ecto_repos: [Aprs.Repo],
+    aprs_is_server: System.get_env("APRS_SERVER", "dallas.aprs2.net"),
+    aprs_is_port: 14580,
+    aprs_is_default_filter: "r/47.6/-122.3/9999999999999999",
+    aprs_is_login_id: System.get_env("APRS_CALLSIGN"),
+    aprs_is_password: System.get_env("APRS_PASSCODE")
 
   # ## Using releases
   #
