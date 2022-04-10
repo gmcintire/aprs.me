@@ -21,10 +21,15 @@ defmodule Aprs.Application do
       # Start a worker by calling: Aprs.Worker.start_link(arg)
       # {Aprs.Worker, arg}
       {Registry, keys: :duplicate, name: Registry.PubSub, partitions: System.schedulers_online()},
-      Aprs.Is.IsSupervisor,
-      # Aprs.Is,
       {Cluster.Supervisor, [topologies, [name: Aprs.ClusterSupervisor]]}
     ]
+
+    children =
+      if System.get_env("MIX_ENV") in [:prod, :dev] do
+        children ++ [Aprs.Is.IsSupervisor]
+      else
+        children
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
