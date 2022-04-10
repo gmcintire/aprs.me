@@ -21,7 +21,8 @@ defmodule Aprs.Application do
       # Start a worker by calling: Aprs.Worker.start_link(arg)
       # {Aprs.Worker, arg}
       {Registry, keys: :duplicate, name: Registry.PubSub, partitions: System.schedulers_online()},
-      # Aprs.Is.IsSupervisor
+      Aprs.Is.IsSupervisor,
+      # Aprs.Is,
       {Cluster.Supervisor, [topologies, [name: Aprs.ClusterSupervisor]]}
     ]
 

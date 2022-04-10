@@ -1,0 +1,33 @@
+<h1>Listing Packets</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.packet_index_path(@socket, :index)}>
+    <.live_component
+      module={AprsWeb.PacketLive.FormComponent}
+      id={@packet.id || :new}
+      title={@page_title}
+      action={@live_action}
+      packet={@packet}
+      return_to={Routes.packet_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="packets">
+    <%= for packet <- @packets do %>
+      <tr id={"packet-#{packet.id}"}>
+        <td><%= packet.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Packet", to: Routes.packet_index_path(@socket, :new) %></span>

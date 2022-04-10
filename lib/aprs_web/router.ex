@@ -18,6 +18,7 @@ defmodule AprsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    live "/packets", PacketLive.Index, :index
   end
 
   # Other scopes may use custom stacks.

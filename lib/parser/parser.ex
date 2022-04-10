@@ -33,9 +33,9 @@ defmodule Parser do
     rescue
       _ ->
         Logger.debug("PARSE ERROR: " <> message)
-        {:ok, file} = File.open("/home/graham/badpackets.txt", [:append])
-        IO.binwrite(file, message <> "\n\n")
-        File.close(file)
+        # {:ok, file} = File.open("/home/graham/badpackets.txt", [:append])
+        # IO.binwrite(file, message <> "\n\n")
+        # File.close(file)
         {:error, "PARSE ERROR"}
     end
   end

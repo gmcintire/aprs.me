@@ -4,18 +4,9 @@ defmodule Aprs.Is do
 
   @aprs_timeout 30 * 1000
 
-  # Initialization
-
-  # def start_link do
-  #   GenServer.start_link(__MODULE__, nil, name: __MODULE__)
-  # end
-
-  # Client APIs
-  def start_link(_opts) do
-    GenServer.start_link(__MODULE__, [], name: __MODULE__)
+  def start_link(opts \\ []) do
+    GenServer.start_link(__MODULE__, opts, name: __MODULE__)
   end
-
-  # Server (callbacks)
 
   @impl true
   def init(_opts) do
@@ -87,9 +78,9 @@ defmodule Aprs.Is do
   # Server methods
 
   defp connect_to_aprs_is(server, port) do
-    Logger.debug("Attempting to connect to #{server}:#{port}")
+    Logger.debug("Connecting to #{server}:#{port}")
     opts = [:binary, active: true]
-    :gen_tcp.connect(server, port, opts)
+    :gen_tcp.connect(String.to_charlist(server), port, opts)
   end
 
   defp send_login_string(socket, aprs_user_id, aprs_passcode, filter) do
