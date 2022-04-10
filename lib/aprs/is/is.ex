@@ -194,36 +194,43 @@ defmodule Aprs.Is do
         # process(parsed_message, parsed_message.data_type)
 
         # Publish the parsed message to all interested parties
-        Registry.dispatch(Registry.PubSub, "aprs_messages", fn entries ->
-          for {pid, _} <- entries, do: send(pid, {:broadcast, parsed_message})
-        end)
+        # Registry.dispatch(Registry.PubSub, "aprs_messages", fn entries ->
+        #   for {pid, _} <- entries, do: send(pid, {:broadcast, parsed_message})
+        # end)
+        Phoenix.PubSub.broadcast(
+          Aprs.PubSub,
+          "aprs_messages",
+          {:packet, parsed_message}
+        )
 
       # IO.inspect(parsed_message)
       # Logger.debug("SERVER:" <> message)
-      {:error, error} ->
-        Logger.debug("PARSE ERROR: " <> error)
+      {:error, _error} ->
+        nil
+
+      # Logger.debug("PARSE ERROR: " <> error)
 
       x ->
         Logger.debug("PARSE ERROR: " <> x)
     end
   end
 
-  def process(message, message_type) when message_type == :message do
-    time_message_received =
-      :calendar.universal_time() |> :calendar.datetime_to_gregorian_seconds()
+  # def process(message, message_type) when message_type == :message do
+  #   # time_message_received =
+  #   #   :calendar.universal_time() |> :calendar.datetime_to_gregorian_seconds()
 
-    :ets.insert(
-      :aprs_messages,
-      {message.data_extended.to, message.data_extended, time_message_received}
-    )
-  end
+  #   # :ets.insert(
+  #   #   :aprs_messages,
+  #   #   {message.data_extended.to, message.data_extended, time_message_received}
+  #   # )
+  # end
 
-  def process(_, _), do: nil
+  # def process(_, _), do: nil
 
-  def recent_messages_for(callsign, since_time) do
-    callsign_guard = {:==, :"$1", {:const, callsign}}
-    timestamp_guard = {:>=, :"$2", {:const, since_time}}
-    total_spec = [{{:"$1", :_, :"$2"}, [{:andalso, callsign_guard, timestamp_guard}], [true]}]
-    :ets.select_count(:aprs_messages, total_spec)
-  end
+  # def recent_messages_for(callsign, since_time) do
+  #   callsign_guard = {:==, :"$1", {:const, callsign}}
+  #   timestamp_guard = {:>=, :"$2", {:const, since_time}}
+  #   total_spec = [{{:"$1", :_, :"$2"}, [{:andalso, callsign_guard, timestamp_guard}], [true]}]
+  #   :ets.select_count(:aprs_messages, total_spec)
+  # end
 end
