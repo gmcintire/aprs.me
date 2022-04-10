@@ -9,10 +9,8 @@
     </tr>
   </thead>
   <tbody id="packets">
-    <%= for packet <- @packets do %>
-      <tr id={"packet-#{packet.id}"}>
-        <td><%= packet.name %></td>
+      <tr>
+        <td><%= inspect(@packet) %></td>
       </tr>
-    <% end %>
   </tbody>
 </table>

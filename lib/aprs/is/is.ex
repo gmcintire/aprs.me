@@ -197,11 +197,13 @@ defmodule Aprs.Is do
         # Registry.dispatch(Registry.PubSub, "aprs_messages", fn entries ->
         #   for {pid, _} <- entries, do: send(pid, {:broadcast, parsed_message})
         # end)
-        Phoenix.PubSub.broadcast(
-          Aprs.PubSub,
-          "aprs_messages",
-          {:packet, parsed_message}
-        )
+        AprsWeb.Endpoint.broadcast("aprs_messages", "packet", parsed_message)
+
+      # Phoenix.PubSub.broadcast(
+      #   Aprs.PubSub,
+      #   "aprs_messages",
+      #   {:packet, parsed_message}
+      # )
 
       # IO.inspect(parsed_message)
       # Logger.debug("SERVER:" <> message)
