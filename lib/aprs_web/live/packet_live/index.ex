@@ -3,6 +3,8 @@ defmodule AprsWeb.PacketLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    # MyAppWeb.Endpoint.subscribe("aprs_packets")
+
     {:ok, assign(socket, :packets, list_packets())}
   end
 
