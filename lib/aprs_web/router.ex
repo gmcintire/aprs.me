@@ -1,5 +1,6 @@
 defmodule AprsWeb.Router do
   use AprsWeb, :router
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug(:accepts, ["html"])
