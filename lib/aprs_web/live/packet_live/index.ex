@@ -20,17 +20,64 @@ defmodule AprsWeb.PacketLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
+  # def handle_info(
+  #       %Phoenix.Socket.Broadcast{
+  #         event: "packet",
+  #         payload: payload,
+  #         topic: "aprs_messages"
+  #       },
+  #       socket
+  #     ) do
+  #   {:noreply,
+  #    socket
+  #    |> assign(:packet, payload)}
+  # end
+
+  # def handle_info(
+  #       %Phoenix.Socket.Broadcast{
+  #         event: "packet",
+  #         payload: payload,
+  #         topic: "aprs_messages"
+  #       },
+  #       socket
+  #     ) do
+  #   IO.inspect(payload)
+  #     end
+
   def handle_info(
         %Phoenix.Socket.Broadcast{
           event: "packet",
-          payload: payload,
+          payload:
+            %{
+              base_callsign: base_callsign,
+              data_extended: %{latitude: latitude, longitude: longitude}
+            } = payload,
           topic: "aprs_messages"
         },
         socket
       ) do
+    IO.inspect(payload)
+
     {:noreply,
-     socket
-     |> assign(:packet, payload)}
+     push_event(socket, "new_marker", %{
+       marker: %{
+         latitude: latitude,
+         longitude: longitude,
+         #  symbol_code: payload.data_extended.symbol_code,
+         #  symbol_table_id: payload.data_extended.symbol_table_id,
+         callsign: base_callsign
+       }
+     })}
+  end
+
+  def handle_info({:new_marker, app}, socket) do
+    {:noreply,
+     push_event(socket, "new_marker", %{
+       marker: %{
+         latitude: app.latitude,
+         longitude: app.longitude
+       }
+     })}
   end
 
   @impl true

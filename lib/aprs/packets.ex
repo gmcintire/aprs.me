@@ -4,10 +4,4 @@ defmodule Aprs.Packets do
   """
 
   import Ecto.Query, warn: false
-  alias Aprs.Repo
-
-  alias Aprs.Packets.Packet
-
-  def list_packets do
-  end
 end

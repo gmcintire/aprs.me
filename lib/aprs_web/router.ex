@@ -14,11 +14,19 @@ defmodule AprsWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :map do
+    plug :put_root_layout, {AprsWeb.LayoutView, :map}
+  end
+
   scope "/", AprsWeb do
     pipe_through :browser
 
     get "/", PageController, :index
-    live "/packets", PacketLive.Index, :index
+
+    scope "/packets" do
+      pipe_through :map
+      live "/", PacketLive.Index, :index
+    end
   end
 
   # Other scopes may use custom stacks.

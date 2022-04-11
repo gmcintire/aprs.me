@@ -8,7 +8,8 @@
 import Config
 
 config :aprs,
-  ecto_repos: [Aprs.Repo]
+  ecto_repos: [Aprs.Repo],
+  env: Mix.env()
 
 # Configures the endpoint
 config :aprs, AprsWeb.Endpoint,

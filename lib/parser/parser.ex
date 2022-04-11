@@ -134,10 +134,12 @@ defmodule Parser do
     <<time::binary-size(7), latitude::binary-size(8), sym_table_id::binary-size(1),
       longitude::binary-size(9)>> = date_time_position_data
 
-    position = Parser.Types.Position.from_aprs(latitude, longitude)
+    # position = Parser.Types.Position.from_aprs(latitude, longitude)
+    %{latitude: lat, longitude: lon} = Parser.Types.Position.from_aprs(latitude, longitude)
 
     %{
-      position: position,
+      latitude: lat,
+      longitude: lon,
       timestamp: time,
       symbol_table_id: sym_table_id,
       symbol_code: "_",
@@ -214,10 +216,12 @@ defmodule Parser do
           longitude::binary-size(9), symbol_code::binary-size(1), comment::binary>>
       ) do
     try do
-      position = Position.from_aprs(latitude, longitude)
+      # position = Position.from_aprs(latitude, longitude)
+      %{latitude: lat, longitude: lon} = Parser.Types.Position.from_aprs(latitude, longitude)
 
       %{
-        position: position,
+        latitude: lat,
+        longitude: lon,
         symbol_table_id: sym_table_id,
         symbol_code: symbol_code,
         comment: comment,
@@ -252,6 +256,8 @@ defmodule Parser do
       position = Position.from_aprs(latitude, longitude)
 
       %{
+        latitude: latitude,
+        longitude: longitude,
         position: position,
         time: time,
         symbol_table_id: sym_table_id,
