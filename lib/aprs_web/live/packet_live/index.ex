@@ -56,7 +56,7 @@ defmodule AprsWeb.PacketLive.Index do
         },
         socket
       ) do
-    IO.inspect(payload)
+    # IO.inspect(payload)
 
     {:noreply,
      push_event(socket, "new_marker", %{
