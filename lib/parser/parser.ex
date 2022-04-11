@@ -253,10 +253,11 @@ defmodule Parser do
       ) do
     try do
       position = Position.from_aprs(latitude, longitude)
+      %{latitude: lat, longitude: lon} = Parser.Types.Position.from_aprs(latitude, longitude)
 
       %{
-        latitude: latitude,
-        longitude: longitude,
+        latitude: lat,
+        longitude: lon,
         position: position,
         time: time,
         symbol_table_id: sym_table_id,
