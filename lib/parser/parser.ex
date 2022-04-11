@@ -205,7 +205,6 @@ defmodule Parser do
       today_rain_total: today_rain_total,
       wind_speed_avg: wind_speed_avg
     }
-    |> IO.inspect()
 
     Logger.debug("TODO: PARSE ULTIMETER DATA: " <> message)
   end

@@ -47,7 +47,7 @@ liveSocket.connect();
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket;
 
-var map = L.map("map").setView([33.173974, -96.495928], 10);
+var map = L.map("map").setView([33.173974, -96.495928], 8);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution:
@@ -75,7 +75,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 // };
 
 window.addEventListener("phx:new_marker", (marker) => {
-  console.log(marker.detail);
+  console.log(marker.detail.marker);
   L.marker([
     parseFloat(marker.detail.marker.latitude),
     parseFloat(marker.detail.marker.longitude),
