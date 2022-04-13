@@ -52,6 +52,7 @@ defmodule Aprs.MixProject do
       {:oban, "~> 2.11"},
       {:libcluster, "~> 3.3"},
       {:geocalc, "~> 0.8"},
+      {:finch, "~> 0.11.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
       {:credo, "~> 1.4 ", only: [:dev, :test], runtime: false}

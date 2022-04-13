@@ -18,10 +18,12 @@ defmodule Aprs.Application do
       {Phoenix.PubSub, name: Aprs.PubSub},
       # Start the Endpoint (http/https)
       AprsWeb.Endpoint,
+      {Finch, name: AprsFinch},
       # Start a worker by calling: Aprs.Worker.start_link(arg)
       # {Aprs.Worker, arg}
       {Registry, keys: :duplicate, name: Registry.PubSub, partitions: System.schedulers_online()},
-      {Cluster.Supervisor, [topologies, [name: Aprs.ClusterSupervisor]]}
+      {Cluster.Supervisor, [topologies, [name: Aprs.ClusterSupervisor]]},
+      Aprs.Presence
     ]
 
     children =

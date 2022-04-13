@@ -54,26 +54,6 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-// L.marker([33.0, -96.0])
-//   .addTo(map)
-//   .bindPopup("A pretty CSS3 popup.<br> Easily customizable.")
-//   .openPopup();
-
-// let Hooks = {};
-// Hooks.MapMarkerHandler = {
-//   mounted() {
-//     this.handleEvent("new_marker", ({ marker }) => {
-//       lat = parseFloat(marker.latitude);
-//       lng = parseFloat(marker.longitude);
-
-//       L.marker([lat, lng])
-//         .addTo(map)
-//         .bindPopup("A pretty CSS3 popup.<br> Easily customizable.")
-//         .openPopup();
-//     });
-//   },
-// };
-
 window.addEventListener("phx:new_marker", (marker) => {
   console.log(marker.detail.marker);
   L.marker([
@@ -83,4 +63,8 @@ window.addEventListener("phx:new_marker", (marker) => {
     .addTo(map)
     .bindPopup(marker.detail.marker.callsign)
     .openPopup();
+});
+
+window.addEventListener("phx:recenter_map", (params) => {
+  console.log(params.detail.map);
 });

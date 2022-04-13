@@ -4,7 +4,14 @@ defmodule AprsWeb.PacketLive.Index do
   require Logger
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(params, session, socket) do
+    IO.inspect("===========================================")
+    IO.inspect(params)
+    IO.inspect("===========================================")
+    IO.inspect(session)
+    IO.inspect("===========================================")
+    IO.inspect(session)
+    IO.inspect("===========================================")
     # AprsWeb.Endpoint.subscribe("aprs_packets")
     # PubSub.subscribe(Aprsme.PubSub, "call:" <> params["callsign"])
     if connected?(socket) do
@@ -76,6 +83,22 @@ defmodule AprsWeb.PacketLive.Index do
        marker: %{
          latitude: app.latitude,
          longitude: app.longitude
+       }
+     })}
+  end
+
+  def handle_info({:geolocate, app}, socket) do
+    {:ok, %Finch.Response{body: body}} =
+      Finch.build(:get, "http://ip-api.com/json/204.110.188.254")
+      |> Finch.request(AprsFinch)
+
+    {:ok, location} = Jason.decode(body)
+
+    {:noreply,
+     push_event(socket, "recenter_map", %{
+       location: %{
+         latitude: location.lat,
+         longitude: location.lon
        }
      })}
   end
